@@ -4,13 +4,13 @@ import { SearchComponent } from "../search/search.component";
 import { OnInit,Renderer2 } from '@angular/core';
 
 @Component({
-  selector: 'app-client',
+  selector: 'app-rendez-client',
   imports: [NavComponent, SearchComponent],
-  templateUrl: './client.component.html',
-  styleUrl: './client.component.css'
+  templateUrl: './rendez-client.component.html',
+  styleUrl: './rendez-client.component.css'
 })
-export class ClientComponent {
-constructor(private renderer: Renderer2) {}
+export class RendezClientComponent {
+  constructor(private renderer: Renderer2) {}
   
   ngOnInit(): void {
     // Liste des scripts à charger

@@ -4,12 +4,12 @@ import { SearchComponent } from "../search/search.component";
 import { OnInit,Renderer2 } from '@angular/core';
 
 @Component({
-  selector: 'app-client',
+  selector: 'app-voiture',
   imports: [NavComponent, SearchComponent],
-  templateUrl: './client.component.html',
-  styleUrl: './client.component.css'
+  templateUrl: './voiture.component.html',
+  styleUrl: './voiture.component.css'
 })
-export class ClientComponent {
+export class VoitureComponent {
 constructor(private renderer: Renderer2) {}
   
   ngOnInit(): void {
