@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { NavComponent } from "../nav/nav.component";
 import { SearchComponent } from "../search/search.component";
 import { OnInit,Renderer2 } from '@angular/core';
+import { FootersComponent } from "../footers/footers.component";
 
 @Component({
   selector: 'app-rendez-client',
-  imports: [NavComponent, SearchComponent],
+  imports: [NavComponent, SearchComponent, FootersComponent],
   templateUrl: './rendez-client.component.html',
   styleUrl: './rendez-client.component.css'
 })

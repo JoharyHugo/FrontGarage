@@ -8,6 +8,7 @@ import { OnInit,Renderer2 } from '@angular/core';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  data:any;
   constructor(private renderer: Renderer2) {}
   
   ngOnInit(): void {
