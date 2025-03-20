@@ -14,6 +14,15 @@ export class ClientComponent {
 constructor(private renderer: Renderer2) {}
   
   ngOnInit(): void {
+  //   console.log("ClientComponent chargé !");
+  
+  // setTimeout(() => {
+  //   const loader = document.querySelector(".loader");
+  //   if (loader) {
+  //     (loader as HTMLElement).style.display = "none";
+  //     console.log("Loader caché !");
+  //   }
+  // }, 1000);
     // Liste des scripts à charger
     const scripts = [
       'vendor/jquery-3.2.1.min.js',

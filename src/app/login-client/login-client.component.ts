@@ -1,6 +1,7 @@
 import { Component,Renderer2 } from '@angular/core';
 import { LoginclientService } from './loginclient.service';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-client',
@@ -10,12 +11,19 @@ import { FormsModule } from '@angular/forms';
 })
 export class LoginClientComponent {
   data = { email: '', motdepasse: '' };
-
+  
   constructor(
-    private loginClientService:LoginclientService,private renderer: Renderer2
+    private loginClientService:LoginclientService,private renderer: Renderer2,private router:Router
   ){}
 
   ngOnInit(): void {
+    const token = sessionStorage.getItem("token");
+    console.log(token);
+    if (token) {
+      console.log("Utilisateur déjà connecté, redirection...");
+      this.router.navigate(['/client']);
+      return; // Stoppe l'exécution pour éviter le chargement inutile des scripts
+    }
     // Liste des scripts à charger
     const scripts = [
       'vendor/jquery-3.2.1.min.js',
@@ -42,11 +50,16 @@ export class LoginClientComponent {
   loginUser():any{
     this.loginClientService.login(this.data).subscribe({
       next:(response)=>{
-        console.log("Réponse du serveur :", response);
+        //console.log("Réponse du serveur :", response);
+        sessionStorage.setItem("token",response.token);
+        console.log("Redirection en cours...");
+        this.router.navigate(['/client']).then(() => {
+          window.location.reload();
+        });
       },
       error:(error)=>{
         if (error.status === 400) {
-          console.log("Identifiants incorrects.");
+          alert(error.error.message);
         } else {
           console.log("Probleme");
         }
@@ -62,7 +75,7 @@ export class LoginClientComponent {
         script.src = url;
         script.type = 'text/javascript';
         script.onload = () => {
-          console.log(`Script loaded: ${url}`);
+          //console.log(`Script loaded: ${url}`);
           resolve(); // Résoudre la promesse une fois le script chargé
         };
         script.onerror = () => {
