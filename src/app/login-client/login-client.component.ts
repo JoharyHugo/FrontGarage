@@ -52,7 +52,7 @@ export class LoginClientComponent {
       next:(response)=>{
         //console.log("Réponse du serveur :", response);
         sessionStorage.setItem("token",response.token);
-        console.log("Redirection en cours...");
+        //console.log("Redirection en cours...");
         this.router.navigate(['/client']).then(() => {
           window.location.reload();
         });

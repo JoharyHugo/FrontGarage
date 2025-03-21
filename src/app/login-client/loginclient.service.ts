@@ -18,4 +18,10 @@ url:string="http://localhost:5000/api/client/";
     });
     return this.http.post<any>(this.url+"login",JSON.stringify(item),{headers:headers});
   }
+  public verifToken():boolean{
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      return true;
+    }else return false;
+  }
 }

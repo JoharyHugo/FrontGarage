@@ -2,16 +2,17 @@ import { Component } from '@angular/core';
 import { NavComponent } from "../nav/nav.component";
 import { SearchComponent } from "../search/search.component";
 import { OnInit,Renderer2 } from '@angular/core';
-import { FootersComponent } from "../footers/footers.component";
+import { LoginclientService } from '../login-client/loginclient.service';
+import {  Router } from '@angular/router';
 
 @Component({
   selector: 'app-client',
-  imports: [NavComponent, SearchComponent, FootersComponent],
+  imports: [NavComponent, SearchComponent],
   templateUrl: './client.component.html',
   styleUrl: './client.component.css'
 })
 export class ClientComponent {
-constructor(private renderer: Renderer2) {}
+constructor(private renderer: Renderer2,private login:LoginclientService,private router:Router) {}
   
   ngOnInit(): void {
   //   console.log("ClientComponent chargé !");
@@ -23,6 +24,10 @@ constructor(private renderer: Renderer2) {}
   //     console.log("Loader caché !");
   //   }
   // }, 1000);
+    var verif=this.login.verifToken();
+    if (!verif) {
+      this.router.navigate(['/']);
+    }
     // Liste des scripts à charger
     const scripts = [
       'vendor/jquery-3.2.1.min.js',

@@ -2,17 +2,36 @@ import { Component } from '@angular/core';
 import { NavComponent } from "../nav/nav.component";
 import { SearchComponent } from "../search/search.component";
 import { OnInit,Renderer2 } from '@angular/core';
+import { FootersComponent } from "../footers/footers.component";
+import { MarqueService } from '../marque/marque.service';
+import { CategorieService } from '../categorie/categorie.service';
+import { Router } from '@angular/router';
+import { LoginclientService } from '../login-client/loginclient.service';
 
 @Component({
   selector: 'app-voiture',
-  imports: [NavComponent, SearchComponent],
+  imports: [NavComponent, SearchComponent, FootersComponent],
   templateUrl: './voiture.component.html',
   styleUrl: './voiture.component.css'
 })
 export class VoitureComponent {
-constructor(private renderer: Renderer2) {}
+  marques:any;
+  categories:any;
+constructor(private renderer: Renderer2,private marque:MarqueService,private categorie:CategorieService,private router:Router,private login:LoginclientService) {}
   
   ngOnInit(): void {
+    var verif=this.login.verifToken();
+    if (!verif) {
+      this.router.navigate(['/']);
+    }
+    this.marque.getAllMarque().subscribe(
+      (data)=>{
+        this.marques=data;
+      },
+      (error)=>{
+        console.error('Error fetching data: ',error);
+      }
+    );
     // Liste des scripts à charger
     const scripts = [
       'vendor/jquery-3.2.1.min.js',
