@@ -7,10 +7,11 @@ import { MarqueService } from '../marque/marque.service';
 import { CategorieService } from '../categorie/categorie.service';
 import { Router } from '@angular/router';
 import { LoginclientService } from '../login-client/loginclient.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-voiture',
-  imports: [NavComponent, SearchComponent, FootersComponent],
+  imports: [NavComponent, SearchComponent, FootersComponent,FormsModule],
   templateUrl: './voiture.component.html',
   styleUrl: './voiture.component.css'
 })
@@ -26,12 +27,24 @@ constructor(private renderer: Renderer2,private marque:MarqueService,private cat
     }
     this.marque.getAllMarque().subscribe(
       (data)=>{
-        this.marques=data;
+        // console.log("Marques reçues:", data);
+        // console.log("Type de data:", typeof data);
+        // console.log("Est-ce un tableau ?", Array.isArray(data));
+        this.marques=data.marque;
       },
       (error)=>{
         console.error('Error fetching data: ',error);
       }
     );
+    this.categorie.getAllMarque().subscribe(
+      (data)=>{
+        this.categories=data.categorie;
+      },
+      (error)=>{
+        console.error('Error fetching data: ',error);
+      }
+    );
+
     // Liste des scripts à charger
     const scripts = [
       'vendor/jquery-3.2.1.min.js',

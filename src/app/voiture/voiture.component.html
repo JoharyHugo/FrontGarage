@@ -36,9 +36,9 @@
                                                 </div>
                                                 <div class="col-12 col-md-9">
                                                     <select  id="marque" class="form-control" >
-                                                        
-                                                        <option value="#">Choix</option>
-                                                       
+                                                        @for (item of marques; track $index) {
+                                                        <option [ngValue]="item">{{item.nommarque}}</option>
+                                                        }
                                                     </select>
                                                 </div>
                                             </div>
@@ -47,9 +47,10 @@
                                                     <label for="categorie" class=" form-control-label">Categorie</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <select  id="categorie" class="form-control" >
-                                                        
-                                                        <option value="#">Choix</option>
+                                                    <select  id="categorie" class="form-control" >  
+                                                        @for (item of categories; track $index) {
+                                                            <option [ngValue]="item">{{item.nomcategorie}}</option>
+                                                        }
                                                        
                                                     </select>
                                                 </div>

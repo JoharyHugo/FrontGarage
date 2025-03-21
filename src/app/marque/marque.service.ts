@@ -12,7 +12,7 @@ export class MarqueService {
     private http:HttpClient
   ) { }
 
-  getAllMarque():Observable<any[]>{
+  getAllMarque():Observable<any>{
     const headers=new HttpHeaders({
       'Content-Type': 'application/json'
     });
