@@ -8,6 +8,7 @@ import { CategorieService } from '../categorie/categorie.service';
 import { Router } from '@angular/router';
 import { LoginclientService } from '../login-client/loginclient.service';
 import { FormsModule } from '@angular/forms';
+import { VoitureService } from './voiture.service';
 
 @Component({
   selector: 'app-voiture',
@@ -18,7 +19,13 @@ import { FormsModule } from '@angular/forms';
 export class VoitureComponent {
   marques:any;
   categories:any;
-constructor(private renderer: Renderer2,private marque:MarqueService,private categorie:CategorieService,private router:Router,private login:LoginclientService) {}
+constructor(private renderer: Renderer2,
+  private marque:MarqueService,
+  private categorie:CategorieService,
+  private router:Router,
+  private login:LoginclientService,
+  private voiture:VoitureService
+) {}
   
   ngOnInit(): void {
     var verif=this.login.verifToken();
@@ -27,7 +34,7 @@ constructor(private renderer: Renderer2,private marque:MarqueService,private cat
     }
     this.marque.getAllMarque().subscribe(
       (data)=>{
-        // console.log("Marques reçues:", data);
+         console.log("Marques reçues:", data);
         // console.log("Type de data:", typeof data);
         // console.log("Est-ce un tableau ?", Array.isArray(data));
         this.marques=data.marque;
@@ -44,7 +51,7 @@ constructor(private renderer: Renderer2,private marque:MarqueService,private cat
         console.error('Error fetching data: ',error);
       }
     );
-
+   
     // Liste des scripts à charger
     const scripts = [
       'vendor/jquery-3.2.1.min.js',
@@ -65,7 +72,9 @@ constructor(private renderer: Renderer2,private marque:MarqueService,private cat
 
     this.loadScriptsSequentially(scripts);
   }
-
+  insertvoiture():void{
+      
+  }
   private loadScriptsSequentially(scriptUrls: string[]): void {
     const loadScript = (url: string): Promise<void> => {
       return new Promise((resolve, reject) => {
@@ -73,7 +82,7 @@ constructor(private renderer: Renderer2,private marque:MarqueService,private cat
         script.src = url;
         script.type = 'text/javascript';
         script.onload = () => {
-          console.log(`Script loaded: ${url}`);
+          //console.log(`Script loaded: ${url}`);
           resolve(); // Résoudre la promesse une fois le script chargé
         };
         script.onerror = () => {
