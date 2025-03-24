@@ -13,9 +13,20 @@ export class VoitureService {
   ) { }
 
   save(item:any):Observable<any>{
-    const headers =new HttpHeaders({
+    const token = sessionStorage.getItem('token');
+    //console.log(JSON.stringify(item));  // Indentation de 2 espaces pour rendre plus lisible
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
-    return this.http.post<any>(this.url+"login",JSON.stringify(item),{headers:headers})
+    return this.http.post<any>(this.url+"ajouterVoiture",JSON.stringify(item),{headers:headers})
+  }
+  getVoitureClient():Observable<any>{
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.get<any[]>(this.url+"listVoiturebyclient",{headers:headers});
   }
 }

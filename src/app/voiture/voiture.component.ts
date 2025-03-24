@@ -9,23 +9,26 @@ import { Router } from '@angular/router';
 import { LoginclientService } from '../login-client/loginclient.service';
 import { FormsModule } from '@angular/forms';
 import { VoitureService } from './voiture.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-voiture',
-  imports: [NavComponent, SearchComponent, FootersComponent,FormsModule],
+  imports: [NavComponent, SearchComponent, FootersComponent,FormsModule ,CommonModule],
   templateUrl: './voiture.component.html',
   styleUrl: './voiture.component.css'
 })
 export class VoitureComponent {
   marques:any;
   categories:any;
+  voitures:any;
+  dataVoiture:any;
 constructor(private renderer: Renderer2,
   private marque:MarqueService,
   private categorie:CategorieService,
   private router:Router,
   private login:LoginclientService,
   private voiture:VoitureService
-) {}
+) {this.voitures={}}
   
   ngOnInit(): void {
     var verif=this.login.verifToken();
@@ -34,7 +37,7 @@ constructor(private renderer: Renderer2,
     }
     this.marque.getAllMarque().subscribe(
       (data)=>{
-         console.log("Marques reçues:", data);
+        // console.log("Marques reçues:", data);
         // console.log("Type de data:", typeof data);
         // console.log("Est-ce un tableau ?", Array.isArray(data));
         this.marques=data.marque;
@@ -51,7 +54,15 @@ constructor(private renderer: Renderer2,
         console.error('Error fetching data: ',error);
       }
     );
-   
+    this.voiture.getVoitureClient().subscribe(
+      (data)=>{
+        this.dataVoiture=data;
+        console.log(JSON.stringify(this.dataVoiture,null,2));
+      },
+      (error)=>{
+        console.error('Error fetching data: ',error);
+      }
+    );
     // Liste des scripts à charger
     const scripts = [
       'vendor/jquery-3.2.1.min.js',
@@ -73,7 +84,21 @@ constructor(private renderer: Renderer2,
     this.loadScriptsSequentially(scripts);
   }
   insertvoiture():void{
-      
+      //console.log(this.voitures);
+     this.voiture.save(this.voitures).subscribe({
+      next:(response)=>{
+        //alert(response);
+      window.location.reload();
+      },
+      error:(error)=>{
+        if (error.status === 400) {
+          alert(error.error.message);
+        } else {
+          console.log("Probleme");
+        }
+        console.error("Erreur :", error);
+      }
+     });
   }
   private loadScriptsSequentially(scriptUrls: string[]): void {
     const loadScript = (url: string): Promise<void> => {
