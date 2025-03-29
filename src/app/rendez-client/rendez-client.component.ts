@@ -3,17 +3,39 @@ import { NavComponent } from "../nav/nav.component";
 import { SearchComponent } from "../search/search.component";
 import { OnInit,Renderer2 } from '@angular/core';
 import { FootersComponent } from "../footers/footers.component";
+import { LoginclientService } from '../login-client/loginclient.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { VoitureService } from '../voiture/voiture.service';
+import { Router } from '@angular/router';
+import { RendezClientService } from './rendez-client.service';
 
 @Component({
   selector: 'app-rendez-client',
-  imports: [NavComponent, SearchComponent, FootersComponent],
+  imports: [NavComponent, SearchComponent, FootersComponent,FormsModule ,CommonModule],
   templateUrl: './rendez-client.component.html',
   styleUrl: './rendez-client.component.css'
 })
 export class RendezClientComponent {
-  constructor(private renderer: Renderer2) {}
+  blocks:any;
+  voitures:any;
+  couter:number=0;
+  rdvs:any={};
+  voitureSelections: any[] = [0];
+  isDisableDate:boolean=false;
+  constructor(
+    private renderer: Renderer2,
+    private login:LoginclientService,
+    private voiture:VoitureService,
+    private router:Router,
+    private rdv:RendezClientService
+  ) {}
   
   ngOnInit(): void {
+    var verif=this.login.verifToken();
+    if (!verif) {
+      this.router.navigate(['/']);
+    }
     // Liste des scripts à charger
     const scripts = [
       'vendor/jquery-3.2.1.min.js',
@@ -34,7 +56,53 @@ export class RendezClientComponent {
 
     this.loadScriptsSequentially(scripts);
   }
+  inserdatardv():void{
+    if (this.couter==0) {
+      this.rdv.getBlock(this.rdvs.daterdv).subscribe(
+        (data)=>{
+          this.blocks=data;
+          //console.log(JSON.stringify(data,null,2));
+        },
+        (error)=>{
+          console.error('Error fetching data: ',error);
+        }
+      );
+      this.couter=1;
+      this.isDisableDate=true;
+      this.voiture.getVoitureClient().subscribe(
+        (data)=>{
+          //console.log(JSON.stringify(data,null,2));
+          this.voitures=data.voitures;
+        },
+        (error)=>{
+          console.error('Error fetching data: ',error);
+        }
+      );
+    }else{
 
+    }
+  }
+  /*Manampy ilay select */
+  addVoitureSelect(): void {
+    if (this.couter==1) {
+      this.voitureSelections.push({});  
+    }
+  }
+  removeVoitureSelect():void{
+    if (this.voitureSelections.length>1) {
+      this.voitureSelections.pop();
+    }
+  }
+  cancel():void{
+    if (this.couter==1) {
+      this.couter=0;
+      this.isDisableDate=false;
+      this.blocks=null;
+      this.voitures=null;
+      this.voitureSelections=[0];
+    }
+  
+  }
   private loadScriptsSequentially(scriptUrls: string[]): void {
     const loadScript = (url: string): Promise<void> => {
       return new Promise((resolve, reject) => {
@@ -42,7 +110,7 @@ export class RendezClientComponent {
         script.src = url;
         script.type = 'text/javascript';
         script.onload = () => {
-          console.log(`Script loaded: ${url}`);
+          //console.log(`Script loaded: ${url}`);
           resolve(); // Résoudre la promesse une fois le script chargé
         };
         script.onerror = () => {

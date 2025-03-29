@@ -57,7 +57,9 @@ constructor(private renderer: Renderer2,
     this.voiture.getVoitureClient().subscribe(
       (data)=>{
         this.dataVoiture=data;
-        console.log(JSON.stringify(this.dataVoiture,null,2));
+        //
+        // 
+        // console.log(JSON.stringify(this.dataVoiture,null,2));
       },
       (error)=>{
         console.error('Error fetching data: ',error);

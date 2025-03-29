@@ -19,27 +19,61 @@
                                                         <label for="email-input" class=" form-control-label">Daty</label>
                                                     </div>
                                                     <div class="col-12 col-md-9">
-                                                        <input type="date" id="email-input"  placeholder="Enter Date" class="form-control">
+                                                        <input type="date" id="email-input" name="daty"  placeholder="Enter Date" class="form-control" [(ngModel)]="this.rdvs.daterdv" [disabled]="this.isDisableDate">
                                                     </div>
                                                 </div>
-                                                <div class="row form-group">
+                                                <div class="row form-group" *ngIf="this.blocks">
                                                     <div class="col col-md-3">
                                                         <label for="select" class=" form-control-label">Heure</label>
                                                     </div>
                                                     <div class="col-12 col-md-9">
-                                                        <select  id="select" class="form-control" >
+                                                        <select  id="select" class="form-control" name="bloc">
                                                             
-                                                            <option value="#">Choix</option>
+                                                            <option *ngFor="let block of this.blocks" [ngValue]="block._id">{{block.bloc}}</option>
                                                            
                                                         </select>
                                                     </div>
                                                     
                                                 </div>
-                                                <div class="card-footer">
-                                                    <button type="submit" class="btn btn-primary btn-sm" style="float: right;">
-                                                        <i class="fa fa-dot-circle-o"></i> Submit
+                                                <ng-container *ngIf="this.voitures">
+                                                    <div *ngFor="let selection of voitureSelections; let i = index" class="row form-group">
+                                                      <div class="col col-md-3">
+                                                        <label for="select" class="form-control-label">Voiture {{ i + 1 }}</label>
+                                                      </div>
+
+
+
+                                                      <div class="col-12 col-md-9">
+                                                        <select class="form-control" name="voiture">
+                                                          <option *ngFor="let item of voitures" [ngValue]="item._id">
+                                                            {{ item.nomvoiture }} - {{ item.immatriculation }}
+                                                          </option>
+                                                        </select>
+                                                      </div>
+                                                    </div>
+                                                  </ng-container>
+                                                  <div class="card-footer d-flex justify-content-between align-items-center">
+                                                    <button type="submit" class="btn btn-danger btn-sm" (click)="cancel()">
+                                                        <i class="fa fa-times"></i> cancel
+                                                    </button>
+                                                    
+                                                    <div style="flex-grow: 1; text-align: center; display: flex; justify-content: center;">
+                                                        <!-- Bouton "-" -->
+                                                        <button type="button" id="removeDropdown" class="btn btn-secondary" (click)="removeVoitureSelect()">-</button>
+                                                        
+                                                        <!-- Espacement entre les boutons -->
+                                                        <div style="width: 10px;"></div>
+                                                        
+                                                        <!-- Bouton "+" -->
+                                                        <button type="button" id="addDropdowns" class="btn btn-success" (click)="addVoitureSelect()">+</button>
+                                                    </div>
+                                                
+                                                    <button type="submit" class="btn btn-primary btn-sm" (click)="inserdatardv()">
+                                                        <i class="fa fa-dot-circle-o"></i> Valider
                                                     </button>
                                                 </div>
+                                                
+                                                
                                             </form>
                                         </div>
                                     </div>
