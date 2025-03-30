@@ -1,29 +1,23 @@
-import { Component,Renderer2 } from '@angular/core';
-import { LoginclientService } from './loginclient.service';
-import { FormsModule } from '@angular/forms';
+import { Component ,Renderer2} from '@angular/core';
+import { NavComponent } from "../nav/nav.component";
+import { SearchComponent } from "../search/search.component";
+import { FootersComponent } from "../footers/footers.component";
 import { Router } from '@angular/router';
+import { NavManagerComponent } from "../nav-manager/nav-manager.component";
 
 @Component({
-  selector: 'app-login-client',
-  templateUrl: './login-client.component.html',
-  imports:[FormsModule],
-  styleUrl: './login-client.component.css'
+  selector: 'app-liste',
+  imports: [NavComponent, SearchComponent, FootersComponent, NavManagerComponent],
+  templateUrl: './liste.component.html',
+  styleUrl: './liste.component.css'
 })
-export class LoginClientComponent {
-  data = { email: 'john@example.com', motdepasse: 'motdepasse123' };
-  
-  constructor(
-    private loginClientService:LoginclientService,private renderer: Renderer2,private router:Router
-  ){}
+export class ListeComponent {
 
+  constructor(
+      private renderer: Renderer2,private router:Router
+    ){}
   ngOnInit(): void {
-    const token = sessionStorage.getItem("token");
-    //console.log(token);
-    if (token) {
-      console.log("Utilisateur déjà connecté, redirection...");
-      this.router.navigate(['/client']);
-      return; // Stoppe l'exécution pour éviter le chargement inutile des scripts
-    }
+  
     // Liste des scripts à charger
     const scripts = [
       'vendor/jquery-3.2.1.min.js',
@@ -43,29 +37,6 @@ export class LoginClientComponent {
     ];
 
     this.loadScriptsSequentially(scripts);
-  }
-
-  
-
-  loginUser():any{
-    this.loginClientService.login(this.data).subscribe({
-      next:(response)=>{
-        //console.log("Réponse du serveur :", response);
-        sessionStorage.setItem("token",response.token);
-        //console.log("Redirection en cours...");
-        this.router.navigate(['/client']).then(() => {
-          window.location.reload();
-        });
-      },
-      error:(error)=>{
-        if (error.status === 400) {
-          alert(error.error.message);
-        } else {
-          console.log("Probleme");
-        }
-        console.error("Erreur :", error);
-      }
-    });
   }
 
   private loadScriptsSequentially(scriptUrls: string[]): void {
@@ -93,5 +64,4 @@ export class LoginClientComponent {
       promiseChain = promiseChain.then(() => loadScript(url));
     });
   }
-
 }

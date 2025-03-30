@@ -1,28 +1,33 @@
-import { Component,Renderer2 } from '@angular/core';
-import { LoginclientService } from './loginclient.service';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { NavComponent } from "../nav/nav.component";
+import { SearchComponent } from "../search/search.component";
+import { OnInit,Renderer2 } from '@angular/core';
+import { LoginclientService } from '../login-client/loginclient.service';
+import {  Router } from '@angular/router';
+import { NavManagerComponent } from "../nav-manager/nav-manager.component";
 
 @Component({
-  selector: 'app-login-client',
-  templateUrl: './login-client.component.html',
-  imports:[FormsModule],
-  styleUrl: './login-client.component.css'
+  selector: 'app-manager',
+  imports: [NavComponent, SearchComponent, NavManagerComponent],
+  templateUrl: './manager.component.html',
+  styleUrl: './manager.component.css'
 })
-export class LoginClientComponent {
-  data = { email: 'john@example.com', motdepasse: 'motdepasse123' };
+export class ManagerComponent {
+  constructor(private renderer: Renderer2,private login:LoginclientService,private router:Router) {}
   
-  constructor(
-    private loginClientService:LoginclientService,private renderer: Renderer2,private router:Router
-  ){}
-
   ngOnInit(): void {
-    const token = sessionStorage.getItem("token");
-    //console.log(token);
-    if (token) {
-      console.log("Utilisateur déjà connecté, redirection...");
-      this.router.navigate(['/client']);
-      return; // Stoppe l'exécution pour éviter le chargement inutile des scripts
+  //   console.log("ClientComponent chargé !");
+  
+  // setTimeout(() => {
+  //   const loader = document.querySelector(".loader");
+  //   if (loader) {
+  //     (loader as HTMLElement).style.display = "none";
+  //     console.log("Loader caché !");
+  //   }
+  // }, 1000);
+    var verif=this.login.verifToken();
+    if (!verif) {
+      this.router.navigate(['/']);
     }
     // Liste des scripts à charger
     const scripts = [
@@ -45,29 +50,6 @@ export class LoginClientComponent {
     this.loadScriptsSequentially(scripts);
   }
 
-  
-
-  loginUser():any{
-    this.loginClientService.login(this.data).subscribe({
-      next:(response)=>{
-        //console.log("Réponse du serveur :", response);
-        sessionStorage.setItem("token",response.token);
-        //console.log("Redirection en cours...");
-        this.router.navigate(['/client']).then(() => {
-          window.location.reload();
-        });
-      },
-      error:(error)=>{
-        if (error.status === 400) {
-          alert(error.error.message);
-        } else {
-          console.log("Probleme");
-        }
-        console.error("Erreur :", error);
-      }
-    });
-  }
-
   private loadScriptsSequentially(scriptUrls: string[]): void {
     const loadScript = (url: string): Promise<void> => {
       return new Promise((resolve, reject) => {
@@ -75,7 +57,7 @@ export class LoginClientComponent {
         script.src = url;
         script.type = 'text/javascript';
         script.onload = () => {
-          //console.log(`Script loaded: ${url}`);
+          console.log(`Script loaded: ${url}`);
           resolve(); // Résoudre la promesse une fois le script chargé
         };
         script.onerror = () => {
@@ -93,5 +75,4 @@ export class LoginClientComponent {
       promiseChain = promiseChain.then(() => loadScript(url));
     });
   }
-
 }

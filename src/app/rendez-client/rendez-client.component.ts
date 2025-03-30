@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { VoitureService } from '../voiture/voiture.service';
 import { Router } from '@angular/router';
 import { RendezClientService } from './rendez-client.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-rendez-client',
@@ -20,7 +21,11 @@ export class RendezClientComponent {
   blocks:any;
   voitures:any;
   couter:number=0;
-  rdvs:any={};
+  rdvs: any = {
+    idbloc: '',
+    daterdv: '',
+    voitureIds: []
+  };
   voitureSelections: any[] = [0];
   isDisableDate:boolean=false;
   constructor(
@@ -79,7 +84,20 @@ export class RendezClientComponent {
         }
       );
     }else{
-
+      this.rdv.insertrdv(this.rdvs).subscribe({
+        next:(response)=>{
+          window.location.reload();
+        },
+        error:(error)=>{
+          if (error.status === 400) {
+            alert(error.error.message);
+          } else {
+            console.log("Probleme");
+          }
+          console.error("Erreur :", error);
+        }
+      });
+      //console.log(JSON.stringify(this.rdvs,null,2));
     }
   }
   /*Manampy ilay select */

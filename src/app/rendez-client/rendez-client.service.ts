@@ -28,6 +28,6 @@ url:string="http://localhost:5000/api/rdv/";
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
-    return this.http.post<any>(this.url+"/ajouterRdv",{headers:headers});
+    return this.http.post<any>(this.url+"/ajouterRdv",JSON.stringify(item),{headers:headers});
   }
 }

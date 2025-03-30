@@ -1,0 +1,112 @@
+<style>
+    .copyright {
+        background-color: white !important;
+        padding: 40px 0 !important;
+        color: black !important;
+        font-size: 13px !important;
+        text-align: center !important;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+    input[type="date"] {
+         /* Bordure verte */
+        border-radius: 5px; /* Coins arrondis */
+        padding: 6px; /* Espacement interne */
+        font-size: 16px; /* Taille de la police */
+        outline: none; /* Supprime l'effet de focus par défaut */
+        transition: all 0.3s ease-in-out; /* Effet de transition */
+        color: #808080;
+    }
+</style>
+
+<div class="page-wrapper">
+    <app-nav-manager></app-nav-manager>
+    <div  class="page-container">
+        <app-search></app-search>
+        <!-- MAIN CONTENT-->
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- DATA TABLE -->
+                            <h3 class="title-5 m-b-35">data table</h3>
+                            <div class="table-data__tool">
+                                <div class="table-data__tool-left">
+                                    <div class="rs-select2--light rs-select2--md">
+                                        <input type="date" name="property" >
+                                        <div class="dropDownSelect2"></div>
+                                    </div>
+
+                                    <button class="au-btn-filter">
+                                        <i class="fa fa-search"></i>rechercher</button>
+                                </div>
+                                <div class="table-data__tool-right">
+                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                        <i class="zmdi zmdi-plus"></i>add item</button>
+                                    <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
+                                        <select class="js-select2" name="type">
+                                            <option selected="selected">Export</option>
+                                            <option value="">Option 1</option>
+                                            <option value="">Option 2</option>
+                                        </select>
+                                        <div class="dropDownSelect2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive table-responsive-data2">
+                                <table class="table table-data2">
+                                    <thead>
+                                        <tr>
+                                           
+                                            <th>Client</th>
+                                            <th>Date</th>
+                                            <th>Heure</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="tr-shadow">
+                                            
+                                            <td>Lori Lynch</td>
+                                            <td>
+                                                <span class="block-email">loriexample.com</span>
+                                            </td>
+                                            <td class="desc">Samsung S8 Black</td>
+                                            <td>
+                                                <div class="table-data-feature">
+                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Send" style="background-color: #3abf3a">
+                                                        <i class="zmdi zmdi-check" style="color: black;"></i>
+                                                    </button>
+                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Delete" style="background-color: #ff0000db;">
+                                                        <i class="fa fa-times" style="color: #000000d1;"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="spacer"></tr>
+                                        <!-- Eto no atao ilay ny ambiny miaraka amin ito
+                                         <tr class="spacer"></tr>
+                                         -->
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- END DATA TABLE -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="copyright">
+                                <p>RAMAROSANDRTANA Johary Ny Aina Nirina</p>
+                                <p>RAVELOMANANA Herimalala Mihary Christelle</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,5 +1,5 @@
 <div class="page-wrapper">
-    <app-nav [lien]="'/client'"></app-nav>
+    <app-nav ></app-nav>
         <div class="page-container">
             <app-search></app-search>
              <!-- MAIN CONTENT-->
@@ -27,7 +27,7 @@
                                                         <label for="select" class=" form-control-label">Heure</label>
                                                     </div>
                                                     <div class="col-12 col-md-9">
-                                                        <select  id="select" class="form-control" name="bloc">
+                                                        <select  id="select" class="form-control" name="bloc" [(ngModel)]="this.rdvs.idbloc">
                                                             
                                                             <option *ngFor="let block of this.blocks" [ngValue]="block._id">{{block.bloc}}</option>
                                                            
@@ -40,11 +40,8 @@
                                                       <div class="col col-md-3">
                                                         <label for="select" class="form-control-label">Voiture {{ i + 1 }}</label>
                                                       </div>
-
-
-
                                                       <div class="col-12 col-md-9">
-                                                        <select class="form-control" name="voiture">
+                                                        <select class="form-control" [(ngModel)]="this.rdvs.voitureIds[i]" name="voiture{{i}}">
                                                           <option *ngFor="let item of voitures" [ngValue]="item._id">
                                                             {{ item.nomvoiture }} - {{ item.immatriculation }}
                                                           </option>

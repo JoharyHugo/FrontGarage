@@ -1,19 +1,19 @@
 import { Component,Renderer2 } from '@angular/core';
-import { LoginclientService } from './loginclient.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginManagerService } from './login-manager.service';
 
 @Component({
-  selector: 'app-login-client',
-  templateUrl: './login-client.component.html',
-  imports:[FormsModule],
-  styleUrl: './login-client.component.css'
+  selector: 'app-login-manager',
+  imports: [FormsModule],
+  templateUrl: './login-manager.component.html',
+  styleUrl: './login-manager.component.css'
 })
-export class LoginClientComponent {
-  data = { email: 'john@example.com', motdepasse: 'motdepasse123' };
-  
+export class LoginManagerComponent {
+  data = { email: 'joe@example.com', motdepasse: 'pass' };
+
   constructor(
-    private loginClientService:LoginclientService,private renderer: Renderer2,private router:Router
+    private loginManager:LoginManagerService,private renderer: Renderer2,private router:Router
   ){}
 
   ngOnInit(): void {
@@ -21,7 +21,7 @@ export class LoginClientComponent {
     //console.log(token);
     if (token) {
       console.log("Utilisateur déjà connecté, redirection...");
-      this.router.navigate(['/client']);
+      this.router.navigate(['/manager']);
       return; // Stoppe l'exécution pour éviter le chargement inutile des scripts
     }
     // Liste des scripts à charger
@@ -45,15 +45,13 @@ export class LoginClientComponent {
     this.loadScriptsSequentially(scripts);
   }
 
-  
-
   loginUser():any{
-    this.loginClientService.login(this.data).subscribe({
+    this.loginManager.login(this.data).subscribe({
       next:(response)=>{
         //console.log("Réponse du serveur :", response);
         sessionStorage.setItem("token",response.token);
         //console.log("Redirection en cours...");
-        this.router.navigate(['/client']).then(() => {
+        this.router.navigate(['/manager']).then(() => {
           window.location.reload();
         });
       },
@@ -67,7 +65,6 @@ export class LoginClientComponent {
       }
     });
   }
-
   private loadScriptsSequentially(scriptUrls: string[]): void {
     const loadScript = (url: string): Promise<void> => {
       return new Promise((resolve, reject) => {
@@ -93,5 +90,4 @@ export class LoginClientComponent {
       promiseChain = promiseChain.then(() => loadScript(url));
     });
   }
-
 }
