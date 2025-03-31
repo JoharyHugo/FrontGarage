@@ -1,7 +1,3 @@
-[build]
-  command = "ng build --configuration=production"
-  publish = "dist/front-garage"
-
 [[redirects]]
   from = "/*"
   to = "/index.html"
