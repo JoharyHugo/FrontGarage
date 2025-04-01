@@ -8,6 +8,8 @@ import { VoitureComponent } from './voiture/voiture.component';
 import { LoginManagerComponent } from './login-manager/login-manager.component';
 import { ManagerComponent } from './manager/manager.component';
 import { ListeComponent } from './liste/liste.component';
+import { AjoutServiceComponent } from './ajout-service/ajout-service.component';
+import { PieceComponent } from './piece/piece.component';
 
 export const routes: Routes = [
   { path: '', component:LoginClientComponent },
@@ -16,5 +18,7 @@ export const routes: Routes = [
   {path:'voiture',component:VoitureComponent},
   {path:'loginManager',component:LoginManagerComponent},
   {path:'manager',component:ManagerComponent},
-  {path:'listerdv',component:ListeComponent}
+  {path:'listerdv',component:ListeComponent},
+  {path:'ajoutService',component:AjoutServiceComponent},
+  {path:'piece',component:PieceComponent}
 ];

@@ -1,0 +1,32 @@
+.rectangle {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.toggle-btn {
+    cursor: pointer;
+}
+
+.sous-liste {
+    background-color: #e9ecef;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.sous-item {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    margin: 5px auto;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-width: 31%;
+}

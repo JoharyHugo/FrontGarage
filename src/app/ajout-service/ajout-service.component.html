@@ -1,1 +1,163 @@
-<p>ajout-service works!</p>
+<div class="page-wrapper">
+    <app-nav-manager></app-nav-manager>
+    <div  class="page-container">
+        <app-search></app-search>
+        <!-- MAIN CONTENT-->
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- <div class="col-lg-6">
+                           
+                        </div> -->
+                        <button type="button" class="btn btn-primary mb-1 ml-auto" data-toggle="modal" data-target="#mediumModal" style="margin-right: 19px;">
+                           Ajout service
+                        </button>
+                        <div class="col-lg-12">
+                            <div class="table-responsive table--no-card m-b-30">
+                                <table class="table table-borderless table-striped table-earning">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Immatriculation</th>
+                                            <th>Marque</th>
+                                            <th>Service</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>205</td>
+                                            <td>A78 TBE</td>
+                                            <td>Peugeot</td>
+                                            <td><a href="#" data-toggle="modal" data-target="#detail">detail</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <app-footers></app-footers>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal medium -->
+<div class="modal fade" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediumModalLabel">Ajout d'un service</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+          
+                            <form action="#"  class="form-horizontal">
+                               
+                           
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="nom" class=" form-control-label">Voiture</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <select id="nom" class="form-control"  name="nom">
+                                            <option>Choix</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="service" class=" form-control-label">Service</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <select id="service" class="form-control"  name="service">
+                                            <option>Choix</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="Sous-service" class=" form-control-label">Sous-service</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <select id="Sous-service" class="form-control" name="sous-service">
+                                            <option >Choix</option>
+                                        </select>
+                                    </div>
+                                    
+                                </div>
+                                <div class="card-footer d-flex justify-content-between align-items-center">
+                                    <button type="submit" class="btn btn-danger btn-sm" >
+                                        <i class="fa fa-times"></i> cancel
+                                    </button>
+                                    
+                                    <div style="flex-grow: 1; text-align: center; display: flex; justify-content: center;">
+                                        <!-- Bouton "-" -->
+                                        <button type="button" id="removeDropdown" class="btn btn-secondary" >-</button>
+                                        
+                                        <!-- Espacement entre les boutons -->
+                                        <div style="width: 10px;"></div>
+                                        
+                                        <!-- Bouton "+" -->
+                                        <button type="button" id="addDropdowns" class="btn btn-success" >+</button>
+                                    </div>
+                                
+                                    <button type="submit" class="btn btn-primary btn-sm" >
+                                        <i class="fa fa-dot-circle-o"></i> Valider
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+               
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button> -->
+                <!-- <button type="button" class="btn btn-primary">Confirm</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal medium -->
+ <!-- modal medium -->
+<div class="modal fade" id="detail" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediumModalLabel">Detail Service</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive table--no-card m-b-30">
+                    <table class="table table-borderless table-striped table-earning">
+                        <thead>
+                            <tr>
+                                <th>Service</th>
+                                <th>Sous-Service</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>S1</td>
+                                <td>SS1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+               
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button> -->
+                <!-- <button type="button" class="btn btn-primary">Confirm</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal medium -->
