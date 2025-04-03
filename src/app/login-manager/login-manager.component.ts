@@ -2,10 +2,10 @@ import { Component,Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginManagerService } from './login-manager.service';
-
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-login-manager',
-  imports: [FormsModule],
+  imports: [FormsModule,RouterModule],
   templateUrl: './login-manager.component.html',
   styleUrl: './login-manager.component.css'
 })
@@ -17,6 +17,7 @@ export class LoginManagerComponent {
   ){}
 
   ngOnInit(): void {
+    
     const token = sessionStorage.getItem("token");
     //console.log(token);
     if (token) {
@@ -43,6 +44,12 @@ export class LoginManagerComponent {
     ];
 
     this.loadScriptsSequentially(scripts);
+  }
+
+  navigateToClient() {
+    this.router.navigate(['/']).then(() => {
+      window.location.reload(); // Recharge la page après la navigation
+    });
   }
 
   loginUser():any{

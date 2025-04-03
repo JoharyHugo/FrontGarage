@@ -33,14 +33,14 @@
                             <div class="table-data__tool">
                                 <div class="table-data__tool-left">
                                     <div class="rs-select2--light rs-select2--md">
-                                        <input type="date" name="property" >
+                                        <input type="date" name="property" [(ngModel)]="this.daty">
                                         <div class="dropDownSelect2"></div>
                                     </div>
 
-                                    <button class="au-btn-filter">
+                                    <button class="au-btn-filter" (click)="this.getRdv()">
                                         <i class="fa fa-search"></i>rechercher</button>
                                 </div>
-                                <div class="table-data__tool-right">
+                                <!-- <div class="table-data__tool-right">
                                     <button class="au-btn au-btn-icon au-btn--green au-btn--small">
                                         <i class="zmdi zmdi-plus"></i>add item</button>
                                     <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
@@ -51,7 +51,7 @@
                                         </select>
                                         <div class="dropDownSelect2"></div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="table-responsive table-responsive-data2">
                                 <table class="table table-data2">
@@ -65,19 +65,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="tr-shadow">
+                                        <tr class="tr-shadow" *ngFor="let item of this.rdv">
                                             
-                                            <td>Lori Lynch</td>
+                                            <td>{{item.idclient.nom}}</td>
                                             <td>
-                                                <span class="block-email">l05-05-2025</span>
-                                            </td>
-                                            <td class="desc">08h-10h</td>
+                                                <span class="block-email">{{item.daterdv | date:'dd-MM-yyyy'}}</span>
+                                              </td>
+                                            <td class="desc">{{item.idbloc.bloc}}</td>
                                             <td>
                                                 <div class="table-data-feature">
-                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Send" style="background-color: #3abf3a">
+                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Send" style="background-color: #3abf3a" (click)="this.rdvService(item._id)">
                                                         <i class="zmdi zmdi-check" style="color: black;"></i>
                                                     </button>
-                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Delete" style="background-color: #ff0000db;">
+                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Delete" style="background-color: #ff0000db;" (click)="this.rdvrefuser(item._id)">
                                                         <i class="fa fa-times" style="color: #000000d1;"></i>
                                                     </button>
                                                 </div>

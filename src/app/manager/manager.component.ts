@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NavComponent } from "../nav/nav.component";
 import { SearchComponent } from "../search/search.component";
 import { OnInit,Renderer2 } from '@angular/core';
 import { LoginclientService } from '../login-client/loginclient.service';
@@ -8,7 +7,7 @@ import { NavManagerComponent } from "../nav-manager/nav-manager.component";
 
 @Component({
   selector: 'app-manager',
-  imports: [NavComponent, SearchComponent, NavManagerComponent],
+  imports: [ SearchComponent, NavManagerComponent],
   templateUrl: './manager.component.html',
   styleUrl: './manager.component.css'
 })
@@ -25,6 +24,7 @@ export class ManagerComponent {
   //     console.log("Loader caché !");
   //   }
   // }, 1000);
+  
     var verif=this.login.verifToken();
     if (!verif) {
       this.router.navigate(['/']);

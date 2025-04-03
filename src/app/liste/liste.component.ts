@@ -1,23 +1,31 @@
 import { Component ,Renderer2} from '@angular/core';
-import { NavComponent } from "../nav/nav.component";
 import { SearchComponent } from "../search/search.component";
-import { FootersComponent } from "../footers/footers.component";
 import { Router } from '@angular/router';
 import { NavManagerComponent } from "../nav-manager/nav-manager.component";
+import { ListeService } from './liste.service';
+import { LoginclientService } from '../login-client/loginclient.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-liste',
-  imports: [NavComponent, SearchComponent, FootersComponent, NavManagerComponent],
+  imports: [ SearchComponent,  NavManagerComponent,FormsModule,CommonModule],
   templateUrl: './liste.component.html',
   styleUrl: './liste.component.css'
 })
 export class ListeComponent {
-
+  daty:string="";
+  rdv:any=[];
   constructor(
-      private renderer: Renderer2,private router:Router
+      private renderer: Renderer2,private router:Router,private listeService:ListeService, private login:LoginclientService
     ){}
   ngOnInit(): void {
-  
+    var verif=this.login.verifToken();
+    if (!verif) {
+      this.router.navigate(['/loginManager']);
+    }
+    this.getRdv();
+    //console.log(this.rdv)
     // Liste des scripts à charger
     const scripts = [
       'vendor/jquery-3.2.1.min.js',
@@ -38,7 +46,49 @@ export class ListeComponent {
 
     this.loadScriptsSequentially(scripts);
   }
-
+  getRdv():void{
+    this.listeService.getRdv(this.daty).subscribe(
+      (data)=>{
+        // console.log("Marques reçues:", data);
+        // console.log("Type de data:", typeof data);
+        // console.log("Est-ce un tableau ?", Array.isArray(data));
+        //console.log(data);
+        this.rdv=data;
+        console.log("Données reçues :", JSON.stringify(this.rdv,null,2));
+      },
+      (error)=>{
+        console.error('Error fetching data: ',error);
+      }
+    );
+  }
+  rdvService(idrdv:string):void{
+    sessionStorage.setItem("rdv",idrdv);
+    this.listeService.presencerdv(idrdv).subscribe(
+      (data)=>{
+        this.router.navigate(['/ajoutService']).then(() => {
+          window.location.reload(); 
+        });
+      },
+      (error)=>{
+        console.error('Error fetching data: ',error);
+      }
+    );
+    
+  }
+  rdvrefuser(idrdv:string):void{
+    this.listeService.refusrdv(idrdv).subscribe(
+      (data)=>{
+        // console.log("Marques reçues:", data);
+        // console.log("Type de data:", typeof data);
+        // console.log("Est-ce un tableau ?", Array.isArray(data));
+        // console.log(data);
+        window.location.reload();
+      },
+      (error)=>{
+        console.error('Error fetching data: ',error);
+      }
+    );
+  }
   private loadScriptsSequentially(scriptUrls: string[]): void {
     const loadScript = (url: string): Promise<void> => {
       return new Promise((resolve, reject) => {

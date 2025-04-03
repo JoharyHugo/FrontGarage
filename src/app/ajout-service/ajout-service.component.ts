@@ -2,6 +2,8 @@ import { Component, Renderer2 } from '@angular/core';
 import { NavManagerComponent } from "../nav-manager/nav-manager.component";
 import { SearchComponent } from "../search/search.component";
 import { FootersComponent } from "../footers/footers.component";
+import { LoginclientService } from '../login-client/loginclient.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ajout-service',
@@ -11,9 +13,13 @@ import { FootersComponent } from "../footers/footers.component";
 })
 export class AjoutServiceComponent {
   
-  constructor(private renderer: Renderer2){}
+  constructor(private renderer: Renderer2,private login:LoginclientService,private router:Router){}
 
   ngOnInit(): void{
+    var verif=this.login.verifToken();
+    if (!verif) {
+      this.router.navigate(['/loginManager']);
+    }
     const scripts = [
       'vendor/jquery-3.2.1.min.js',
       'vendor/bootstrap-4.1/popper.min.js',

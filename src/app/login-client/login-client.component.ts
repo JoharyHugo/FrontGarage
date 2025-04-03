@@ -2,11 +2,12 @@ import { Component,Renderer2 } from '@angular/core';
 import { LoginclientService } from './loginclient.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login-client',
   templateUrl: './login-client.component.html',
-  imports:[FormsModule],
+  imports:[FormsModule,RouterModule],
   styleUrl: './login-client.component.css'
 })
 export class LoginClientComponent {
@@ -17,6 +18,7 @@ export class LoginClientComponent {
   ){}
 
   ngOnInit(): void {
+    //window.location.reload();
     const token = sessionStorage.getItem("token");
     //console.log(token);
     if (token) {
@@ -24,6 +26,7 @@ export class LoginClientComponent {
       this.router.navigate(['/client']);
       return; // Stoppe l'exécution pour éviter le chargement inutile des scripts
     }
+    //window.location.reload();
     // Liste des scripts à charger
     const scripts = [
       'vendor/jquery-3.2.1.min.js',
@@ -45,7 +48,11 @@ export class LoginClientComponent {
     this.loadScriptsSequentially(scripts);
   }
 
-  
+  navigateToManager() {
+    this.router.navigate(['/loginManager']).then(() => {
+      window.location.reload(); // Recharge la page après la navigation
+    });
+  }
 
   loginUser():any{
     this.loginClientService.login(this.data).subscribe({
