@@ -32,7 +32,7 @@ constructor(
       'Content-Type': 'application/json'
     });
     const data={rdvId:idrdv};
-    return this.http.put<any>("http://localhost:5000/api/rdv/absence",JSON.stringify(data),{headers:headers});
+    return this.http.put<any>("http://localhost:5000/api/rdv/admin/absence",JSON.stringify(data),{headers:headers});
   }
   presencerdv(idrdv:string):Observable<any>{
     const token = sessionStorage.getItem('token');
@@ -41,7 +41,7 @@ constructor(
       'Content-Type': 'application/json'
     });
     const data={rdvId:idrdv};
-    return this.http.put<any>("http://localhost:5000/api/rdv/presence",JSON.stringify(data),{headers:headers});
+    return this.http.put<any>("http://localhost:5000/api/rdv/admin/presence",JSON.stringify(data),{headers:headers});
   }
 }
 

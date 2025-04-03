@@ -25,10 +25,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>205</td>
-                                            <td>A78 TBE</td>
-                                            <td>Peugeot</td>
+                                        <tr *ngFor="let car of this.voitures">
+                                            <td>{{car.voiture.nomvoiture}}</td>
+                                            <td>{{car.voiture.immatriculation}}</td>
+                                            <td>{{car.voiture.idmarque.nommarque}} </td>
                                             <td><a href="#" data-toggle="modal" data-target="#detail">detail</a></td>
                                         </tr>
                                     </tbody>
@@ -58,17 +58,14 @@
                 </button>
             </div>
             <div class="modal-body">
-          
                             <form action="#"  class="form-horizontal">
-                               
-                           
                                 <div class="row form-group">
                                     <div class="col col-md-3">
                                         <label for="nom" class=" form-control-label">Voiture</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <select id="nom" class="form-control"  name="nom">
-                                            <option>Choix</option>
+                                        <select id="nom" class="form-control"  name="nom" [(ngModel)]="this.data.idVoiture">
+                                            <option *ngFor="let car of this.voitures" [ngValue]="car.voiture._id">{{car.voiture.immatriculation}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -77,39 +74,42 @@
                                         <label for="service" class=" form-control-label">Service</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <select id="service" class="form-control"  name="service">
-                                            <option>Choix</option>
+                                        <select id="service" class="form-control"  name="service" [(ngModel)]="this.data.idService" (change)="this.getSousService(this.data.idService)">
+                                            <option value=""></option>
+                                            <option *ngFor="let service of this.service" [ngValue]="service._id">{{service.nom}}</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row form-group">
+                                <ng-container *ngIf="this.sous_service">
+                                <div class="row form-group" *ngFor="let selection of this.selections; let i = index">
                                     <div class="col col-md-3">
-                                        <label for="Sous-service" class=" form-control-label">Sous-service</label>
+                                        <label for="Sous-service" class=" form-control-label">Sous-service {{i+1}}</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <select id="Sous-service" class="form-control" name="sous-service">
-                                            <option >Choix</option>
+                                        <select id="Sous-service" class="form-control" name="sous-service{{i}}" [(ngModel)]="this.data.devis[i].idsousservice">
+                                            <option *ngFor="let sous_service of this.sous_service" [ngValue]="sous_service._id">{{sous_service.nom}}</option>
                                         </select>
                                     </div>
                                     
                                 </div>
+                                </ng-container>
                                 <div class="card-footer d-flex justify-content-between align-items-center">
-                                    <button type="submit" class="btn btn-danger btn-sm" >
+                                    <!-- <button type="submit" class="btn btn-danger btn-sm" >
                                         <i class="fa fa-times"></i> cancel
-                                    </button>
+                                    </button> -->
                                     
                                     <div style="flex-grow: 1; text-align: center; display: flex; justify-content: center;">
                                         <!-- Bouton "-" -->
-                                        <button type="button" id="removeDropdown" class="btn btn-secondary" >-</button>
+                                        <button type="button" id="removeDropdown" class="btn btn-secondary" (click)="this.removeSelect()">-</button>
                                         
                                         <!-- Espacement entre les boutons -->
                                         <div style="width: 10px;"></div>
                                         
                                         <!-- Bouton "+" -->
-                                        <button type="button" id="addDropdowns" class="btn btn-success" >+</button>
+                                        <button type="button" id="addDropdowns" class="btn btn-success" (click)="this.addSelect()">+</button>
                                     </div>
                                 
-                                    <button type="submit" class="btn btn-primary btn-sm" >
+                                    <button type="submit" class="btn btn-primary btn-sm" (click)="this.insertDataVoiture()">
                                         <i class="fa fa-dot-circle-o"></i> Valider
                                     </button>
                                 </div>
