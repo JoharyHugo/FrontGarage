@@ -26,6 +26,7 @@ export class AjoutServiceComponent {
      {}
     ]
   };
+  detail:any=[];
   
   selections: any[] = [0];
   constructor(private renderer: Renderer2,private login:LoginclientService,private router:Router,private ajoutService:AjoutServiceService){}
@@ -104,7 +105,7 @@ export class AjoutServiceComponent {
   }
   insertDataVoiture():void{
     this.data.rdvId=sessionStorage.getItem("rdv");
-    //console.log(JSON.stringify(this.data,null,2));
+    console.log(JSON.stringify(this.data,null,2));
     this.ajoutService.insertData(this.data).subscribe({
       next:(response)=>{
         window.location.reload();
@@ -132,6 +133,53 @@ export class AjoutServiceComponent {
       this.selections.pop();
       this.data.devis.pop();
     }
+  }
+  getDetailVoiture(idVoiture: string): void {
+    let rdvId: string | null = sessionStorage.getItem("rdv");
+   /// console.log("Nandalo");
+    if (!rdvId) {
+        console.error("rdvId est null !");
+        return;
+    }
+    
+    this.ajoutService.getSousServiceVoiture(idVoiture, rdvId).subscribe(
+        (response: any) => {
+            this.detail = response; // Stocke les données reçues
+            console.log("Détails du service récupérés :", JSON.stringify(this.detail,null,2));
+        },
+        (error) => {
+            console.error("Erreur lors de la récupération des détails :", error);
+        }
+    );
+  }
+  validationDevis():void{
+    let rdvId: string | null = sessionStorage.getItem("rdv");
+    /// console.log("Nandalo");
+    if (!rdvId) {
+        console.error("rdvId est null !");
+        return;
+    }
+    //console.log("Nandalo");
+    this.ajoutService.validation(rdvId).subscribe({
+      next:(response)=>{
+       alert("Valider avec succes");
+       sessionStorage.removeItem("rdv");
+       this.router.navigate(['/manager']).then(() => {
+        window.location.reload(); 
+      });
+      },
+      error:(error)=>{
+        if (error.status === 400) {
+          alert(error.error.message);
+        } else {
+          console.log("Probleme");
+        }
+        console.error("Erreur :", error);
+      }
+    });
+  }
+  liberation():void{
+    this.detail=null;
   }
   private loadScriptsSequentially(scriptUrls: string[]): void {
     const loadScript = (url: string): Promise<void> => {

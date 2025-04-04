@@ -8,18 +8,18 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="list-container">
+                            <div class="list-container" *ngFor="let item of this.rdv; let i=index">
                                 <!-- Élément de la liste principale -->
-                                <div class="rectangle" (click)="toggleSousListe(1)">
-                                    Jean 18/08/2025 07h-08h
+                                <div class="rectangle" (click)="toggleSousListe(i)">
+                                    {{item.idclient.nom}}  | {{item.daterdv | date:'dd-MM-yyyy'}}   |   {{item.idbloc.bloc}}
                                     <span class="toggle-btn">▶</span>
                                 </div>
                                 <!-- Sous-liste -->
-                                <div class="sous-liste" [ngClass]="{'d-none': !isVisible[1]}">
+                                <div class="sous-liste" *ngFor="let car of item.voitureIds" [ngClass]="{'d-none': !isVisible[i]}">
                                     <div class="row">
-                                        <div class="col-md-4 sous-item">Voiture </div>
+                                        <div class="col-md-4 sous-item">{{car.voiture.nomvoiture}}  {{car.voiture.immatriculation}}</div>
                                         <div class="col-md-4 sous-item">Ajouter Piece</div>
-                                        <div class="col-md-4 sous-item">Insertion piece</div>
+                                        <!-- <div class="col-md-4 sous-item">Insertion piece</div> -->
                                     </div>
                                 </div>
                             </div>

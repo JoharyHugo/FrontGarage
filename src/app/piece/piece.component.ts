@@ -3,6 +3,9 @@ import { NavManagerComponent } from "../nav-manager/nav-manager.component";
 import { SearchComponent } from "../search/search.component";
 import { FootersComponent } from "../footers/footers.component";
 import { CommonModule } from '@angular/common';
+import { LoginclientService } from '../login-client/loginclient.service';
+import { Router } from '@angular/router';
+import { PieceService } from './piece.service';
 
 @Component({
   selector: 'app-piece',
@@ -12,12 +15,16 @@ import { CommonModule } from '@angular/common';
 })
 export class PieceComponent {
   isVisible: { [key: number]: boolean } = {};
-
+  rdv:any;
     
-constructor(private renderer:Renderer2){}
+constructor(private renderer:Renderer2,private login:LoginclientService,private router:Router,private piece:PieceService){}
 
 ngOnInit(): void {
-  
+  var verif=this.login.verifToken();
+    if (!verif) {
+      this.router.navigate(['/loginManager']);
+    }
+  this.getRdv();
   // Liste des scripts à charger
   const scripts = [
     'vendor/jquery-3.2.1.min.js',
@@ -41,6 +48,17 @@ ngOnInit(): void {
 
 toggleSousListe(index: number) {
   this.isVisible[index] = !this.isVisible[index];
+}
+getRdv():void{
+  this.piece.getRdv().subscribe(
+    (data)=>{
+      this.rdv=data;
+      //console.log(JSON.stringify(this.rdv,null,2));
+    },
+    (error)=>{
+      console.error('Error fetching data: ',error);
+    }
+  );
 }
 private loadScriptsSequentially(scriptUrls: string[]): void {
   const loadScript = (url: string): Promise<void> => {
