@@ -6,10 +6,11 @@ import { CommonModule } from '@angular/common';
 import { LoginclientService } from '../login-client/loginclient.service';
 import { Router } from '@angular/router';
 import { PieceService } from './piece.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-piece',
-  imports: [NavManagerComponent, SearchComponent, FootersComponent,CommonModule],
+  imports: [NavManagerComponent, SearchComponent, FootersComponent,CommonModule,RouterModule],
   templateUrl: './piece.component.html',
   styleUrl: './piece.component.css'
 })
@@ -48,6 +49,13 @@ ngOnInit(): void {
 
 toggleSousListe(index: number) {
   this.isVisible[index] = !this.isVisible[index];
+}
+addPiece(idRdv:string,idVoiture:string):void{
+  sessionStorage.setItem("rdv",idRdv);
+  sessionStorage.setItem("voiture",idVoiture);
+  this.router.navigate(['/ajoutPiece']).then(() => {
+    window.location.reload(); 
+  });
 }
 getRdv():void{
   this.piece.getRdv().subscribe(

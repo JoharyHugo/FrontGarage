@@ -1,1 +1,51 @@
-<p>ajout-piece works!</p>
+<div class="page-wrapper">
+    <app-nav-manager></app-nav-manager>
+    <div class="page-container">
+        <app-search></app-search>
+        <!-- MAIN CONTENT-->
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-start">
+
+                            <button type="button" class="btn btn-secondary mb-1" >
+                                <i class="fas fa-arrow-left"></i> Retour
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Tableau ici -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="table-responsive table--no-card m-b-30">
+                                <table class="table table-borderless table-striped table-earning">
+                                    <thead>
+                                        <tr>
+                                            <th>Service</th>
+                                            <th>Sous-service</th>
+                                            <th>Insertion piece</th>
+                                            <th>Piece</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>S1</td>
+                                            <td>SS1</td>
+                                            <td><a href="#">Ajouter</a></td>
+                                            <td><a href="#">voir</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <app-footers></app-footers>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

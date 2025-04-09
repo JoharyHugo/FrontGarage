@@ -10,6 +10,7 @@ import { ManagerComponent } from './manager/manager.component';
 import { ListeComponent } from './liste/liste.component';
 import { AjoutServiceComponent } from './ajout-service/ajout-service.component';
 import { PieceComponent } from './piece/piece.component';
+import { AjoutPieceComponent } from './ajout-piece/ajout-piece.component';
 
 export const routes: Routes = [
   { path: '', component:LoginClientComponent },
@@ -20,5 +21,6 @@ export const routes: Routes = [
   {path:'manager',component:ManagerComponent},
   {path:'listerdv',component:ListeComponent},
   {path:'ajoutService',component:AjoutServiceComponent},
-  {path:'piece',component:PieceComponent}
+  {path:'piece',component:PieceComponent},
+  {path:'ajoutPiece',component:AjoutPieceComponent}
 ];

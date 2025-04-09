@@ -120,20 +120,6 @@ export class AjoutServiceComponent {
       }
     });
   }
-  /*Manampy ilay select */
-  addSelect(): void {
-    if (this.sous_service) {
-      this.selections.push({});  
-      this.data.devis.push({ idsousservice: "" });
-
-    }
-  }
-  removeSelect():void{
-    if (this.selections.length>1) {
-      this.selections.pop();
-      this.data.devis.pop();
-    }
-  }
   getDetailVoiture(idVoiture: string): void {
     let rdvId: string | null = sessionStorage.getItem("rdv");
    /// console.log("Nandalo");
@@ -152,6 +138,21 @@ export class AjoutServiceComponent {
         }
     );
   }
+  /*Manampy ilay select */
+  addSelect(): void {
+    if (this.sous_service) {
+      this.selections.push({});  
+      this.data.devis.push({ idsousservice: "" });
+
+    }
+  }
+  removeSelect():void{
+    if (this.selections.length>1) {
+      this.selections.pop();
+      this.data.devis.pop();
+    }
+  }
+  
   validationDevis():void{
     let rdvId: string | null = sessionStorage.getItem("rdv");
     /// console.log("Nandalo");

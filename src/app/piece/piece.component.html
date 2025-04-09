@@ -18,7 +18,7 @@
                                 <div class="sous-liste" *ngFor="let car of item.voitureIds" [ngClass]="{'d-none': !isVisible[i]}">
                                     <div class="row">
                                         <div class="col-md-4 sous-item">{{car.voiture.nomvoiture}}  {{car.voiture.immatriculation}}</div>
-                                        <div class="col-md-4 sous-item">Ajouter Piece</div>
+                                        <button class="col-md-4 sous-item " style="color: blue;"  (click)="this.addPiece(item._id,car.voiture._id)">Ajouter Piece</button>
                                         <!-- <div class="col-md-4 sous-item">Insertion piece</div> -->
                                     </div>
                                 </div>
