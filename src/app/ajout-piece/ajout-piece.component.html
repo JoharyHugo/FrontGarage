@@ -28,12 +28,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <ng-container *ngFor="let service of this.dataVoiture">
+                                            <tr *ngFor="let sousService of service.sousServices; let i = index">
+                                                <td *ngIf="i === 0" [attr.rowspan]="service.sousServices.length">
+                                                    {{ service.nomService }}
+                                                </td>
+                                                <td>{{sousService.nomSousService}}</td>
+                                                <td><a href="#">Ajouter</a></td>
+                                                <td><a href="#">voir</a></td>
+                                            </tr>
+                                        </ng-container>
+                                        <!-- <tr>
                                             <td>S1</td>
                                             <td>SS1</td>
                                             <td><a href="#">Ajouter</a></td>
                                             <td><a href="#">voir</a></td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>

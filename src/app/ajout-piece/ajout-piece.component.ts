@@ -2,19 +2,22 @@ import { Component, Renderer2 } from '@angular/core';
 import { NavManagerComponent } from "../nav-manager/nav-manager.component";
 import { SearchComponent } from "../search/search.component";
 import { FootersComponent } from "../footers/footers.component";
+import { AjoutPieceService } from './ajout-piece.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import { AjoutServiceService } from '../ajout-service/ajout-service.service';
+
 
 @Component({
   selector: 'app-ajout-piece',
-  imports: [NavManagerComponent, SearchComponent, FootersComponent],
+  imports: [NavManagerComponent, SearchComponent, FootersComponent,CommonModule,FormsModule],
   templateUrl: './ajout-piece.component.html',
   styleUrl: './ajout-piece.component.css'
 })
 export class AjoutPieceComponent {
-
-
+  dataVoiture:any;
   ngOnInit(): void{
+    this.getServiceVoiture();
     const scripts = [
       'vendor/jquery-3.2.1.min.js',
       'vendor/bootstrap-4.1/popper.min.js',
@@ -35,10 +38,24 @@ export class AjoutPieceComponent {
     this.loadScriptsSequentially(scripts);
   }
 
-  constructor(private renderer: Renderer2,private service:AjoutServiceService){}
+  constructor(private renderer: Renderer2,private pieceService:AjoutPieceService){}
 
   getServiceVoiture():void{
-
+    let rdvId: string | null = sessionStorage.getItem("rdv");
+    let idVoiture:string | null=sessionStorage.getItem("voiture");
+    if (rdvId && idVoiture) {
+      this.pieceService.getServiceDataRdv(idVoiture, rdvId).subscribe(
+        (data)=>{
+          this.dataVoiture=data;
+          console.log(JSON.stringify(this.dataVoiture,null,2));
+        },
+        (error)=>{
+          console.error('Error fetching data: ',error);
+        }
+      );
+    } else {
+      console.error("rdvId ou idVoiture est null.");
+    }
   }
 
   private loadScriptsSequentially(scriptUrls: string[]): void {
