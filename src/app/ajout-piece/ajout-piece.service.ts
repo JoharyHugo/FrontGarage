@@ -19,4 +19,12 @@ url:string="";
       });
       return this.http.get<any>("http://localhost:5000/api/rdv/admin/detailsDevisSousService/"+idrdv+"/"+idvoiture,{headers:headers})
   }
+
+  getAllPiece():Observable<any>{
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+       'Content-Type': 'application/json'
+    });
+    return this.http.get<any>("http://localhost:5000/api/piece/listPiece",{headers:headers});
+  }
 }

@@ -16,8 +16,19 @@ import { FormsModule } from '@angular/forms';
 })
 export class AjoutPieceComponent {
   dataVoiture:any;
+  piece:any;
+  rdvData = {
+    rdvId: '',
+    idService: '',
+    idSousService: '',
+    idVoiture: '',
+    devis: [] as { idpiece: string, quantite: number | null }[]
+  };
+  
   ngOnInit(): void{
     this.getServiceVoiture();
+    this.getPiece();
+    console.log(JSON.stringify(this.piece,null,2));
     const scripts = [
       'vendor/jquery-3.2.1.min.js',
       'vendor/bootstrap-4.1/popper.min.js',
@@ -56,6 +67,18 @@ export class AjoutPieceComponent {
     } else {
       console.error("rdvId ou idVoiture est null.");
     }
+  }
+
+  getPiece():void{
+    this.pieceService.getAllPiece().subscribe(
+      (data)=>{
+        this.piece=data;
+        console.log(JSON.stringify(this.piece,null,2));
+      },
+      (error)=>{
+        console.error('Error fetching data: ',error);
+      }
+    );
   }
 
   private loadScriptsSequentially(scriptUrls: string[]): void {
