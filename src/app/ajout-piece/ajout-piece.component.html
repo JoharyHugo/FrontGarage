@@ -8,8 +8,8 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12 d-flex justify-content-start">
-
-                            <button type="button" class="btn btn-secondary mb-1" >
+                            
+                            <button type="button" class="btn btn-secondary mb-1" routerLink="/piece">
                                 <i class="fas fa-arrow-left"></i> Retour
                             </button>
                         </div>
@@ -34,7 +34,7 @@
                                                     {{ service.nomService }}
                                                 </td>
                                                 <td>{{sousService.nomSousService}}</td>
-                                                <td><a href="#"  data-toggle="modal" data-target="#mediumModal">Ajouter</a></td>
+                                                <td><a href="#" (click)="this.openModal(service.idService,sousService.idSousService)"  data-toggle="modal" data-target="#mediumModal">Ajouter</a></td>
                                                 <td><a href="#" data-toggle="modal" data-target="#largeModal">voir</a></td>
                                             </tr>
                                         </ng-container>
@@ -70,15 +70,16 @@
                 </button>
             </div>
             <div class="modal-body">
-                            <form action="#"  class="form-horizontal">
+                            <form (ngSubmit)="this.envoieData()"  class="form-horizontal">
                                 <div class="row form-group">
                                     <div class="col col-md-3">
                                         <label for="piece" class=" form-control-label">Piece</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <select id="piece" class="form-control" name="piece">
-                                            <option *ngFor="let piecy of this.piece.piece">{{piecy.nompiece}}</option>
+                                        <select [(ngModel)]="rdvData.devis[0].idpiece" class="form-control" name="piece" id="piece">
+                                            <option *ngFor="let piecy of piece?.piece" [ngValue]="piecy._id">{{ piecy.nompiece }}</option>
                                         </select>
+                                        
                                     </div>
                                     
                                 </div>
@@ -87,7 +88,7 @@
                                         <label for="quantite" class=" form-control-label">Quantite</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <input type="text" id="quantite"  placeholder="Entrer quantite" name="quantite" class="form-control"  >
+                                        <input type="text" id="quantite"  placeholder="Entrer quantite" name="quantite" class="form-control"  [(ngModel)]="this.rdvData.devis[0].quantite">
                                     </div>
                                 </div>
                                 <div class="card-footer">

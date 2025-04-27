@@ -27,4 +27,13 @@ url:string="";
     });
     return this.http.get<any>("http://localhost:5000/api/piece/listPiece",{headers:headers});
   }
+
+  submitData(data:any):Observable<any>{
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+       'Authorization': `Bearer ${token}`,
+       'Content-Type': 'application/json'
+     });
+    return this.http.post<any>("http://localhost:5000/api/rdv/admin/ajoutDevisRdvPiece",JSON.stringify(data),{headers:headers});
+  }
 }

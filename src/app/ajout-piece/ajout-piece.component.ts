@@ -5,12 +5,13 @@ import { FootersComponent } from "../footers/footers.component";
 import { AjoutPieceService } from './ajout-piece.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 
 
 @Component({
   selector: 'app-ajout-piece',
-  imports: [NavManagerComponent, SearchComponent, FootersComponent,CommonModule,FormsModule],
+  imports: [NavManagerComponent, SearchComponent, FootersComponent,CommonModule,FormsModule,RouterModule],
   templateUrl: './ajout-piece.component.html',
   styleUrl: './ajout-piece.component.css'
 })
@@ -28,7 +29,10 @@ export class AjoutPieceComponent {
   ngOnInit(): void{
     this.getServiceVoiture();
     this.getPiece();
-    console.log(JSON.stringify(this.piece,null,2));
+   // console.log(JSON.stringify(this.piece,null,2));
+   if (!this.rdvData.devis[0]) {
+    this.rdvData.devis[0] = { idpiece: '', quantite: null };
+   }
     const scripts = [
       'vendor/jquery-3.2.1.min.js',
       'vendor/bootstrap-4.1/popper.min.js',
@@ -58,7 +62,7 @@ export class AjoutPieceComponent {
       this.pieceService.getServiceDataRdv(idVoiture, rdvId).subscribe(
         (data)=>{
           this.dataVoiture=data;
-          console.log(JSON.stringify(this.dataVoiture,null,2));
+         // console.log(JSON.stringify(this.dataVoiture,null,2));
         },
         (error)=>{
           console.error('Error fetching data: ',error);
@@ -73,14 +77,51 @@ export class AjoutPieceComponent {
     this.pieceService.getAllPiece().subscribe(
       (data)=>{
         this.piece=data;
-        console.log(JSON.stringify(this.piece,null,2));
+        //console.log(JSON.stringify(this.piece,null,2));
       },
       (error)=>{
         console.error('Error fetching data: ',error);
       }
     );
   }
-
+  openModal(idService: string, idSousService: string) {
+    //console.log(idService);
+    this.rdvData.idService = idService;
+    this.rdvData.idSousService = idSousService;
+   
+  }
+  envoieData():void{
+    const rdv = sessionStorage.getItem("rdv");
+    if (rdv) {
+      this.rdvData.rdvId = rdv;
+      
+    } else {
+      console.error("rdv non trouvé dans sessionStorage !");
+      // Tu peux afficher un message ou bloquer l'envoi
+    }
+    const voiture=sessionStorage.getItem("voiture")
+    if (voiture) {
+      this.rdvData.idVoiture=voiture;
+    }else{
+      console.error("voiture non trouvé dans sessionStorage !");
+    }
+    //console.log(JSON.stringify(this.rdvData,null,2));
+    this.pieceService.submitData(this.rdvData).subscribe(
+      {
+        next:(response)=>{
+          window.location.reload();
+        },
+        error:(error)=>{
+          if (error.status === 400) {
+            alert(error.error.message);
+          } else {
+            console.log("Probleme");
+          }
+          console.error("Erreur :", error);
+        }
+      }
+    )
+  }
   private loadScriptsSequentially(scriptUrls: string[]): void {
     const loadScript = (url: string): Promise<void> => {
       return new Promise((resolve, reject) => {
