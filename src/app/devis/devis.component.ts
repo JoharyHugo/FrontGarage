@@ -1,39 +1,29 @@
 import { Component, Renderer2 } from '@angular/core';
-import { NavManagerComponent } from "../nav-manager/nav-manager.component";
+import { NavComponent } from "../nav/nav.component";
 import { SearchComponent } from "../search/search.component";
 import { FootersComponent } from "../footers/footers.component";
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { LoginclientService } from '../login-client/loginclient.service';
 import { Router } from '@angular/router';
-import { PieceService } from './piece.service';
-import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-piece',
-  imports: [NavManagerComponent, SearchComponent, FootersComponent,CommonModule,RouterModule],
-  templateUrl: './piece.component.html',
-  styleUrl: './piece.component.css'
+  selector: 'app-devis',
+  imports: [NavComponent, SearchComponent, FootersComponent,CommonModule,RouterModule],
+  templateUrl: './devis.component.html',
+  styleUrl: './devis.component.css'
 })
-export class PieceComponent {
+export class DevisComponent {
   isVisible: { [key: number]: boolean } = {};
-  rdv:any;
-    
-constructor(private renderer:Renderer2,private login:LoginclientService,private router:Router,private piece:PieceService){}
+  items = [1]; // Remplace par tes vraies données
 
-ngOnInit(): void {
-  var verif=this.login.verifToken();
-    if (!verif) {
-      this.router.navigate(['/loginManager']);
-    }
-  this.getRdv();
-  
-  ['rdv', 'voiture'].forEach(cle => {
-  if (sessionStorage.getItem(cle) !== null) {
-    sessionStorage.removeItem(cle);
-  }
-});
+  constructor(private renderer:Renderer2,private login:LoginclientService,private router:Router) {}
 
-
+  ngOnInit(): void {
+  // var verif=this.login.verifToken();
+  //   if (!verif) {
+  //     this.router.navigate(['']);
+  //   }
   // Liste des scripts à charger
   const scripts = [
     'vendor/jquery-3.2.1.min.js',
@@ -54,47 +44,8 @@ ngOnInit(): void {
 
   this.loadScriptsSequentially(scripts);
 }
-
 toggleSousListe(index: number) {
   this.isVisible[index] = !this.isVisible[index];
-}
-addPiece(idRdv:string,idVoiture:string):void{
-  sessionStorage.setItem("rdv",idRdv);
-  sessionStorage.setItem("voiture",idVoiture);
-  this.router.navigate(['/ajoutPiece']).then(() => {
-    window.location.reload(); 
-  });
-}
-getRdv():void{
-  this.piece.getRdv().subscribe(
-    (data)=>{
-      this.rdv=data;
-      //console.log(JSON.stringify(this.rdv,null,2));
-    },
-    (error)=>{
-      console.error('Error fetching data: ',error);
-    }
-  );
-}
-valider(idrdv:string):void{
-  let rdv={rdvId:idrdv};
-  this.piece.validation(rdv).subscribe(
-    {
-      next:(response)=>{
-       
-        window.location.reload();
-        
-      },
-      error:(error)=>{
-        if (error.status === 400) {
-          alert(error.error.message);
-        } else {
-          console.log("Probleme");
-        }
-        console.error("Erreur :", error);
-      }
-    }
-  );
 }
 private loadScriptsSequentially(scriptUrls: string[]): void {
   const loadScript = (url: string): Promise<void> => {

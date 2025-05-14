@@ -11,6 +11,7 @@ import { ListeComponent } from './liste/liste.component';
 import { AjoutServiceComponent } from './ajout-service/ajout-service.component';
 import { PieceComponent } from './piece/piece.component';
 import { AjoutPieceComponent } from './ajout-piece/ajout-piece.component';
+import { DevisComponent } from './devis/devis.component';
 
 export const routes: Routes = [
   { path: '', component:LoginClientComponent },
@@ -22,5 +23,6 @@ export const routes: Routes = [
   {path:'listerdv',component:ListeComponent},
   {path:'ajoutService',component:AjoutServiceComponent},
   {path:'piece',component:PieceComponent},
-  {path:'ajoutPiece',component:AjoutPieceComponent}
+  {path:'ajoutPiece',component:AjoutPieceComponent},
+  {path:'devis',component:DevisComponent}
 ];

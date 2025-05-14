@@ -1,27 +1,24 @@
 <div class="page-wrapper">
-    <app-nav-manager></app-nav-manager>
+    <app-nav></app-nav>
     <div  class="page-container">
         <app-search></app-search>
-        <!-- MAIN CONTENT-->
         <div class="main-content">
             <div class="section__content section__content--p30">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="list-container" *ngFor="let item of this.rdv; let i=index">
+                            <div class="list-container" *ngFor="let item of items; let i = index">
                                 <!-- Élément de la liste principale -->
                                 <div class="rectangle" >
-                                    {{item.idclient.nom}}  | {{item.daterdv | date:'dd-MM-yyyy'}}   |   {{item.idbloc.bloc}}
-                                     <button type="button" class="btn btn-danger" (click)="this.valider(item._id)">
-                                        Valider 
-                                      </button>
+                                    Hugo  | 18/07/2024   |  07h-09h
                                     <span class="toggle-btn" (click)="toggleSousListe(i)">▶</span>
                                 </div>
                                 <!-- Sous-liste -->
-                                <div class="sous-liste" *ngFor="let car of item.voitureIds" [ngClass]="{'d-none': !isVisible[i]}">
+                                <div class="sous-liste"  [ngClass]="{'d-none': !isVisible[i]}">
                                     <div class="row">
-                                        <div class="col-md-4 sous-item">{{car.voiture.nomvoiture}}  {{car.voiture.immatriculation}}</div>
-                                        <button class="col-md-4 sous-item " style="color: blue;"  (click)="this.addPiece(item._id,car.voiture._id)">Ajouter Piece</button>
+                                        <div class="col-md-4 sous-item">Fortuner  15616TBE</div>
+                                        <button class="col-md-4 sous-item " style="color: blue;"  >Voir detail</button>
+                                        <button class="col-md-4 sous-item " style="background-color: red;color: rgb(255, 255, 255);"  >Export PDF</button>
                                         <!-- <div class="col-md-4 sous-item">Insertion piece</div> -->
                                     </div>
                                 </div>

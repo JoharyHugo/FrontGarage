@@ -9,7 +9,7 @@
                     <div class="row">
                         <div class="col-12 d-flex justify-content-start">
                             
-                            <button type="button" class="btn btn-secondary mb-1" routerLink="/piece">
+                            <button type="button" class="btn btn-secondary mb-1" (click)="this.retour()">
                                 <i class="fas fa-arrow-left"></i> Retour
                             </button>
                         </div>
@@ -35,7 +35,7 @@
                                                 </td>
                                                 <td>{{sousService.nomSousService}}</td>
                                                 <td><a href="#" (click)="this.openModal(service.idService,sousService.idSousService)"  data-toggle="modal" data-target="#mediumModal">Ajouter</a></td>
-                                                <td><a href="#" data-toggle="modal" data-target="#largeModal">voir</a></td>
+                                                <td><a href="#" (click)="this.getDetailPiece(sousService.idSousService)" data-toggle="modal" data-target="#largeModal">voir</a></td>
                                             </tr>
                                         </ng-container>
                                         <!-- <tr>
@@ -123,11 +123,13 @@
                         <thead>
                             <tr>
                                 <th>Piece</th>
+                                <th>Quantite</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Huile Moteur</td>
+                            <tr *ngFor="let piece of this.detailPiece">
+                                <td>{{piece.nomPiece}}</td>
+                                <td>{{piece.quantite}}</td>
                             </tr>
                         </tbody>
                     </table>

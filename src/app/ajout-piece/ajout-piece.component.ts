@@ -5,7 +5,7 @@ import { FootersComponent } from "../footers/footers.component";
 import { AjoutPieceService } from './ajout-piece.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 
 
@@ -25,11 +25,11 @@ export class AjoutPieceComponent {
     idVoiture: '',
     devis: [] as { idpiece: string, quantite: number | null }[]
   };
-  
+  detailPiece:any;
   ngOnInit(): void{
     this.getServiceVoiture();
     this.getPiece();
-   // console.log(JSON.stringify(this.piece,null,2));
+   
    if (!this.rdvData.devis[0]) {
     this.rdvData.devis[0] = { idpiece: '', quantite: null };
    }
@@ -53,7 +53,7 @@ export class AjoutPieceComponent {
     this.loadScriptsSequentially(scripts);
   }
 
-  constructor(private renderer: Renderer2,private pieceService:AjoutPieceService){}
+  constructor(private renderer: Renderer2,private pieceService:AjoutPieceService,private router:Router){}
 
   getServiceVoiture():void{
     let rdvId: string | null = sessionStorage.getItem("rdv");
@@ -62,7 +62,7 @@ export class AjoutPieceComponent {
       this.pieceService.getServiceDataRdv(idVoiture, rdvId).subscribe(
         (data)=>{
           this.dataVoiture=data;
-         // console.log(JSON.stringify(this.dataVoiture,null,2));
+          //console.log(JSON.stringify(this.dataVoiture,null,2));
         },
         (error)=>{
           console.error('Error fetching data: ',error);
@@ -72,7 +72,28 @@ export class AjoutPieceComponent {
       console.error("rdvId ou idVoiture est null.");
     }
   }
-
+  retour():void{
+    this.router.navigate(['/piece']).then(() => {
+      window.location.reload(); // Recharge la page après la navigation
+    });
+  }
+  getDetailPiece(idSousService:string):void{
+     let rdvId: string | null = sessionStorage.getItem("rdv");
+    let idVoiture:string | null=sessionStorage.getItem("voiture");
+    if (rdvId && idVoiture) {
+      this.pieceService.getPieceSousService(rdvId,idVoiture,idSousService).subscribe(
+        (data)=>{
+          this.detailPiece=data;
+          console.log(JSON.stringify(this.detailPiece,null,2));
+        },
+        (error)=>{
+          console.error('Error fetching data: ',error);
+        }
+      );
+    } else {
+      console.error("rdvId ou idVoiture est null.");
+    }
+  }
   getPiece():void{
     this.pieceService.getAllPiece().subscribe(
       (data)=>{

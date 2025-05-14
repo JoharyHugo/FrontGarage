@@ -17,4 +17,13 @@ export class PieceService {
     });
     return this.http.get<any>("http://localhost:5000/api/rdv/admin/listRdv/encoursdevis",{headers:headers});
   }
+
+  validation(item:any):Observable<any>{
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.put<any>("http://localhost:5000/api/rdv/admin//confirmation",JSON.stringify(item),{headers:headers});
+  }
 }
